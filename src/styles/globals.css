@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.poke__types li::after {
+  content: '\2022';
+  padding: 0 2px;
+}
+li:last-child::after {
+  content: '';
+}
