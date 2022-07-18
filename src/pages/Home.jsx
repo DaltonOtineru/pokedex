@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
+import MobileCapturedButton from '../components/MobileCapturedButton';
 import Pagination from '../components/Pagination';
 import PokemonList from '../components/PokemonList';
 
@@ -11,6 +12,7 @@ const Home = () => {
         <PokemonList />
       </main>
       <Pagination />
+      <MobileCapturedButton />
     </>
   );
 };

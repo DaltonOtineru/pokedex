@@ -19,9 +19,9 @@ const Header = ({ detailsPage }) => {
           />
         </Link>
         <div className={`${detailsPage && 'w-[331px] lg:w-fit'}`}>
-          <Link to="/" className="hidden md:inline">
+          <Link to="/capturedpokemons" className="hidden md:inline">
             <div
-              className={`flex items-center justify-center bg-[#EB5435] rounded-full text-white  font-semibold px-2 ${
+              className={`flex items-center justify-center bg-[#EB5435] rounded-full text-white  font-semibold px-2 hover:scale-[1.01] transition duration-200 ease-out ${
                 detailsPage
                   ? '!text-2xl !lg:text-2xl py-3 lg:py-0 mt-4 lg:mt-0'
                   : 'text-2xl lg:text-4xl'

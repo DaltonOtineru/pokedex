@@ -1,13 +1,16 @@
-import { useRecoilValue } from 'recoil';
+import { useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { currentPokemonState } from '../atoms/currentPokemonAtom';
+import { modalState } from '../atoms/modalAtom';
 import { setBg } from '../utils/setBg';
 
 const DetailsCard = () => {
-  const currentPokemon = useRecoilValue(currentPokemonState);
-  console.log(currentPokemon);
+  const [currentPokemon, setCurrentPokemon] =
+    useRecoilState(currentPokemonState);
+  const [modalIsOpen, setModalIsOpen] = useRecoilState(modalState);
 
   return (
-    <div className="sticky top-10 rounded-[44px] detail__group md:mt-[9rem] w-[90%] self-center md:w-full h-fit md:mr-4 text-[#333333]">
+    <div className="sticky top-10 rounded-[44px] shadow-[0_0_16px_0_rgba(0,0,0,0.3)] md:mt-[9rem] w-[90%] self-center md:w-full h-fit md:mr-4 text-[#333333]">
       <div
         className={`rounded-t-[44px] flex flex-col items-center justify-center py-12 ${setBg(
           currentPokemon?.types[0].type.name
@@ -37,8 +40,8 @@ const DetailsCard = () => {
           </ul>
         </div>
         <div
-          className="w-full detail__group spotify
-         rounded-2xl p-2 p-4"
+          className="w-full detail__group
+         rounded-2xl  p-4"
         >
           <h3 className="font-bold text-lg">Base Stats</h3>
           <ul className="space-y-[10px]">
@@ -54,7 +57,10 @@ const DetailsCard = () => {
             ))}
           </ul>
         </div>
-        <button className="bg-[#EB5435] font-semibold text-lg text-white rounded-full w-full py-4 hover:scale-[1.01] transition ease-out duration-200">
+        <button
+          className="bg-[#EB5435] font-semibold text-lg text-white rounded-full w-full py-4 hover:scale-[1.01] transition ease-out duration-200"
+          onClick={() => setModalIsOpen(true)}
+        >
           Capture
         </button>
       </div>

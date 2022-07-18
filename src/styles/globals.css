@@ -2,13 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-.poke__types li::after {
-  content: '\2022';
-  padding: 0 2px;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  .poke__types li::after {
+    content: '\2022';
+    padding: 0 2px;
+  }
+  li:last-child::after {
+    content: '';
+  }
 }
-li:last-child::after {
-  content: '';
-}
-.detail__group {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+
+@layer components {
+  .detail__group,
+  .captured__none {
+    @apply shadow-[0_8px_16px_4px_rgba(0,0,0,0.05)];
+  }
+  .capture__input {
+    @apply placeholder:text-[#828282] placeholder:text-lg text-lg border border-[#828282] pl-2 py-2 rounded-lg w-full mb-2 outline-none;
+  }
 }

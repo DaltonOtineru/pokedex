@@ -8,12 +8,14 @@ const Pagination = () => {
 
   const nextPage = () => {
     setOffset(offset + 20);
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   };
   const prevPage = () => {
     if (offset === 0) {
       return;
     }
     setOffset(offset - 20);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
