@@ -1,7 +1,5 @@
-import { EmojiSadIcon } from '@heroicons/react/outline';
 import { useEffect, useState } from 'react';
 import pokedex from '../assets/pokedex_logo.svg';
-import { CgPokemon } from 'react-icons/cg';
 import { Link } from 'react-router-dom';
 
 const CapturedPage = () => {
@@ -11,7 +9,7 @@ const CapturedPage = () => {
   useEffect(() => {
     const capturedPokemons = JSON.parse(localStorage.getItem('captured'));
     if (capturedPokemons) {
-      setCaptured(capturedPokemons);
+      setCaptured((captured) => capturedPokemons);
     }
   }, []);
 

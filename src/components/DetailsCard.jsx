@@ -5,9 +5,39 @@ import { modalState } from '../atoms/modalAtom';
 import { setBg } from '../utils/setBg';
 
 const DetailsCard = () => {
-  const [currentPokemon, setCurrentPokemon] =
+  const [globalCurrentPokemon, setGlobalCurrentPokemon] =
     useRecoilState(currentPokemonState);
+  const [currentPokemon, setCurrentPokemon] = useState(() => {
+    const localPokemon = JSON.parse(localStorage.getItem('currentPokemon'));
+    return localPokemon || globalCurrentPokemon;
+  });
   const [modalIsOpen, setModalIsOpen] = useRecoilState(modalState);
+  const [isCaptured, setIsCaptured] = useState(false);
+  const [capturedDetails, setCapturedDetails] = useState({});
+
+  useEffect(() => {
+    const capturedPokemon = JSON.parse(localStorage.getItem('captured'));
+    const currentPokemonIndex = capturedPokemon.findIndex(
+      (pokemon) => pokemon.name === currentPokemon?.name
+    );
+    setIsCaptured((isCaptured) => (currentPokemonIndex > -1 ? true : false));
+    if (currentPokemonIndex >= 0) {
+      setCapturedDetails((capturedDetails) =>
+        setCapturedDetails({
+          nickname: capturedPokemon[currentPokemonIndex].nickname,
+          date: capturedPokemon[currentPokemonIndex].date,
+          level: capturedPokemon[currentPokemonIndex].level,
+        })
+      );
+    }
+  }, [currentPokemon, modalIsOpen]);
+
+  useEffect(() => {
+    const localPokemon = JSON.parse(localStorage.getItem('currentPokemon'));
+    setCurrentPokemon((currentPokemon) => localPokemon);
+  }, [globalCurrentPokemon]);
+
+  console.log(currentPokemon.id);
 
   return (
     <div className="sticky top-10 rounded-[44px] shadow-[0_0_16px_0_rgba(0,0,0,0.3)] md:mt-[9rem] w-[90%] self-center md:w-full h-fit md:mr-4 text-[#333333]">
@@ -28,9 +58,16 @@ const DetailsCard = () => {
       </div>
       <div className="px-4 pt-8 pb-12 space-y-6">
         <div className="w-full detail__group rounded-2xl p-4">
-          <h3 className="font-bold text-lg">About</h3>
+          <h3 className="font-bold text-lg mb-1">About</h3>
           <ul className="space-y-[10px]">
-            <li className="text-[15px]">Type(s): </li>
+            <ul className="poke__types inline-flex items-center">
+              <p className="mr-1">Type(s): </p>
+              {currentPokemon?.types?.map(({ type: { name } }) => (
+                <li key={name} className="text-[15px] capitalize">
+                  {name}
+                </li>
+              ))}
+            </ul>
             <li className="text-[15px]">
               Weight: {currentPokemon.weight / 100} kg
             </li>
@@ -43,7 +80,7 @@ const DetailsCard = () => {
           className="w-full detail__group
          rounded-2xl  p-4"
         >
-          <h3 className="font-bold text-lg">Base Stats</h3>
+          <h3 className="font-bold text-lg mb-1">Base Stats</h3>
           <ul className="space-y-[10px]">
             {currentPokemon.stats.map(({ base_stat, stat: { name } }) => (
               <li
@@ -57,6 +94,25 @@ const DetailsCard = () => {
             ))}
           </ul>
         </div>
+        {isCaptured && (
+          <div
+            className="w-full detail__group
+         rounded-2xl  p-4"
+          >
+            <h3 className="font-bold text-lg mb-1">Capture Information</h3>
+            <ul className="space-y-[10px]">
+              <li className="text-[15px] capitalize">
+                Nickname: {capturedDetails?.nickname}
+              </li>
+              <li className="text-[15px] capitalize">
+                Captured on: {capturedDetails?.date}
+              </li>
+              <li className="text-[15px] capitalize">
+                Captured Level: {capturedDetails?.level}
+              </li>
+            </ul>
+          </div>
+        )}
         <button
           className="bg-[#EB5435] font-semibold text-lg text-white rounded-full w-full py-4 hover:scale-[1.01] transition ease-out duration-200"
           onClick={() => setModalIsOpen(true)}

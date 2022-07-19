@@ -20,6 +20,11 @@ const PokemonCard = ({ name, url }) => {
     fetchDetails();
   }, [url]);
 
+  const handlePokemonClick = () => {
+    setCurrentPokemon((currentPokemon) => pokemonDetails);
+    localStorage.setItem('currentPokemon', JSON.stringify(pokemonDetails));
+  };
+
   return (
     <>
       {mounted && (
@@ -29,13 +34,7 @@ const PokemonCard = ({ name, url }) => {
         >
           <article
             className="h-[fit-content] bg-white flex flex-col items-center rounded-lg shadow-md hover:shadow-lg hover:scale-[1.01] cursor-pointer transition duration-200 ease-out col-span-1"
-            onClick={() => {
-              setCurrentPokemon((currentPokemon) => pokemonDetails);
-              localStorage.setItem(
-                'currentPokemon',
-                JSON.stringify(pokemonDetails)
-              );
-            }}
+            onClick={() => handlePokemonClick()}
           >
             <div
               className={`w-full flex justify-center items-center rounded-t-lg ${setBg(

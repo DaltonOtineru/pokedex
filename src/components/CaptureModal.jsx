@@ -1,15 +1,17 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { capturedState } from '../atoms/capturedAtom';
 import { currentPokemonState } from '../atoms/currentPokemonAtom';
 import { modalState } from '../atoms/modalAtom';
 
 const CaptureModal = () => {
   const [modalIsOpen, setModalIsOpen] = useRecoilState(modalState);
-  const [capturedPokemons, setCapturedPokemons] = useRecoilState(capturedState);
   const currentPokemon = useRecoilValue(currentPokemonState);
-  const [newCapture, setNewCapture] = useState(currentPokemon);
+
+  const [capturedPokemon, setCapturedPokemon] = useState(() => {
+    const captured = JSON.parse(localStorage.getItem('captured'));
+    return captured || [];
+  });
 
   const [nickname, setNickname] = useState('');
   const [date, setDate] = useState('');
@@ -17,7 +19,19 @@ const CaptureModal = () => {
 
   const handleCapture = (e) => {
     e.preventDefault();
-    // localStorage.setItem('captured', JSON.stringify(currentPokemon));
+    const inputData = {
+      nickname: nickname,
+      date: date,
+      level: level,
+    };
+    const updatedCapture = Object.assign({}, currentPokemon, inputData);
+    capturedPokemon.push(updatedCapture);
+    localStorage.setItem('captured', JSON.stringify(capturedPokemon));
+
+    setNickname('');
+    setDate('');
+    setLevel('');
+    setModalIsOpen(false);
   };
 
   return (
