@@ -11,12 +11,11 @@ import Home from './pages/Home';
 const App = () => {
   const [pokemons, setPokemons] = useRecoilState(pokemonsState);
   const offset = useRecoilValue(offsetState);
+  const URL = `https://pokeapi.co/api/v2/pokemon/?limit=20&offset=${offset}`;
 
   useEffect(() => {
     const fetchPokemon = async () => {
-      const data = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/?limit=20&offset=${offset}`
-      );
+      const data = await fetch(URL);
       const { results } = await data.json();
       setPokemons(results);
     };

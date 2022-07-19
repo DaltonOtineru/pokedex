@@ -14,6 +14,12 @@
   li:last-child::after {
     content: '';
   }
+  .captured__titles {
+    background: rgba(224, 224, 224, 0.3);
+  }
+  .nickname__none {
+    color: rgba(51, 51, 51, 0.2);
+  }
 }
 
 @layer components {
@@ -21,7 +27,12 @@
   .captured__none {
     @apply shadow-[0_8px_16px_4px_rgba(0,0,0,0.05)];
   }
+  .pokemon__large {
+  }
   .capture__input {
     @apply placeholder:text-[#828282] placeholder:text-lg text-lg border border-[#828282] pl-2 py-2 rounded-lg w-full mb-2 outline-none;
+  }
+  .captured__mobile {
+    @apply shadow-[0_8px_16px_4px_rgba(0,0,0,0.05)] md:shadow-none;
   }
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import pokedex from '../assets/pokedex_logo.svg';
 import { Link } from 'react-router-dom';
+import CapturedList from '../components/CapturedList';
 
 const CapturedPage = () => {
   const [captured, setCaptured] = useState(null);
@@ -14,9 +15,9 @@ const CapturedPage = () => {
   }, []);
 
   return (
-    <>
+    <div className="max-w-[1440px] mx-auto">
       <header
-        className={`max-w-[1440px] flex justify-center md:justify-start items-center mx-auto pt-16 pb-12 ${
+        className={`px-6 w-full flex justify-center md:justify-start items-center mx-auto pt-16 pb-12 ${
           captured === null && 'md:justify-center'
         }`}
       >
@@ -44,7 +45,26 @@ const CapturedPage = () => {
           </div>
         </main>
       )}
-    </>
+      {captured && (
+        <main className="flex flex-col px-6">
+          <div className="hidden place-content-center px-6 captured__titles rounded-2xl md:grid grid-cols-5 h-[60px]">
+            <div className="col-span-2 font-semibold text-lg lg:text-xl">
+              <h3>POKEMON</h3>
+            </div>
+            <div className="col-span-1 font-semibold text-lg lg:text-xl">
+              <h3>NICKNAME</h3>
+            </div>
+            <div className="col-span-1 font-semibold text-lg lg:text-xl">
+              <h3>CAPTURED AT</h3>
+            </div>
+            <div className="col-span-1 font-semibold text-lg lg:text-xl overflow-visible whitespace-nowrap">
+              <h3>CAPTURED LEVEL</h3>
+            </div>
+          </div>
+          <CapturedList />
+        </main>
+      )}
+    </div>
   );
 };
 

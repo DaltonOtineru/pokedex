@@ -17,18 +17,20 @@ const DetailsCard = () => {
 
   useEffect(() => {
     const capturedPokemon = JSON.parse(localStorage.getItem('captured'));
-    const currentPokemonIndex = capturedPokemon.findIndex(
-      (pokemon) => pokemon.name === currentPokemon?.name
-    );
-    setIsCaptured((isCaptured) => (currentPokemonIndex > -1 ? true : false));
-    if (currentPokemonIndex >= 0) {
-      setCapturedDetails((capturedDetails) =>
-        setCapturedDetails({
-          nickname: capturedPokemon[currentPokemonIndex].nickname,
-          date: capturedPokemon[currentPokemonIndex].date,
-          level: capturedPokemon[currentPokemonIndex].level,
-        })
+    if (capturedPokemon) {
+      const currentPokemonIndex = capturedPokemon.findIndex(
+        (pokemon) => pokemon.name === currentPokemon?.name
       );
+      setIsCaptured((isCaptured) => (currentPokemonIndex > -1 ? true : false));
+      if (currentPokemonIndex >= 0) {
+        setCapturedDetails((capturedDetails) =>
+          setCapturedDetails({
+            nickname: capturedPokemon[currentPokemonIndex].nickname,
+            date: capturedPokemon[currentPokemonIndex].date,
+            level: capturedPokemon[currentPokemonIndex].level,
+          })
+        );
+      }
     }
   }, [currentPokemon, modalIsOpen]);
 
