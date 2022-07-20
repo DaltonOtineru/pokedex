@@ -99,7 +99,10 @@ const CaptureModal = () => {
                 />
                 <button
                   className="bg-[#EB5435] text-2xl text-white rounded-full w-full py-[.65rem] hover:scale-[1.01] transition ease-out duration-200  font-semibold mt-2"
-                  onClick={(e) => handleCapture(e)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCapture(e);
+                  }}
                 >
                   Capture
                 </button>

@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { currentPokemonState } from '../atoms/currentPokemonAtom';
+import { detailsState } from '../atoms/detailsAtom';
 import { setBg } from '../utils/setBg';
 
 const PokemonCard = ({ name, url }) => {
+  const [detailsVisible, setDetailsVisible] = useRecoilState(detailsState);
+
   const [pokemonDetails, setPokemonDetails] = useState({});
   const [mounted, setMounted] = useState(false);
   const [currentPokemon, setCurrentPokemon] =
@@ -28,9 +31,12 @@ const PokemonCard = ({ name, url }) => {
   return (
     <>
       {mounted && (
-        <Link
-          to={window.location.pathname === '/details' ? '' : 'details'}
+        <div
           className="col-span-1"
+          onClick={(e) => {
+            e.stopPropagation();
+            setDetailsVisible(true);
+          }}
         >
           <article
             className="h-[fit-content] bg-white flex flex-col items-center rounded-lg shadow-md hover:shadow-lg hover:scale-[1.01] cursor-pointer transition duration-200 ease-out col-span-1"
@@ -50,14 +56,14 @@ const PokemonCard = ({ name, url }) => {
                 alt={name}
               />
             </div>
-            <h2 className="text-sm sm:text-xl md:text-[28px] font-bold text-[#333333] capitalize self-start pl-4 pt-2 md:py-2">
+            <h2 className="text-sm sm:text-xl lg:text-[28px] font-bold text-[#333333] capitalize self-start pl-4 pt-2 md:py-2">
               {pokemonDetails?.id > 9 ? '#0' : '#00'}
               {pokemonDetails?.id} {name}
             </h2>
             <ul className="w-full flex justify-start pl-4 poke__types pb-4">
               {pokemonDetails?.types?.map(({ type: { name } }) => (
                 <li
-                  className="text-[12px] sm:text-lg md:text-2xl capitalize font-light text-[#828282]"
+                  className="text-[12px] sm:text-lg lg:text-2xl capitalize font-light text-[#828282]"
                   key={name}
                 >
                   {name}
@@ -65,7 +71,7 @@ const PokemonCard = ({ name, url }) => {
               ))}
             </ul>
           </article>
-        </Link>
+        </div>
       )}
     </>
   );

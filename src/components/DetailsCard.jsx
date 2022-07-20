@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { currentPokemonState } from '../atoms/currentPokemonAtom';
+import { detailsState } from '../atoms/detailsAtom';
 import { modalState } from '../atoms/modalAtom';
 import { setBg } from '../utils/setBg';
 
 const DetailsCard = () => {
+  const [detailsVisible, setDetailsVisible] = useRecoilState(detailsState);
   const [globalCurrentPokemon, setGlobalCurrentPokemon] =
     useRecoilState(currentPokemonState);
   const [currentPokemon, setCurrentPokemon] = useState(() => {
@@ -14,6 +16,25 @@ const DetailsCard = () => {
   const [modalIsOpen, setModalIsOpen] = useRecoilState(modalState);
   const [isCaptured, setIsCaptured] = useState(false);
   const [capturedDetails, setCapturedDetails] = useState({});
+
+  const detailsRef = useRef();
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (
+        detailsRef.current &&
+        detailsVisible &&
+        !detailsRef.current.contains(e.target)
+      ) {
+        setDetailsVisible(false);
+      }
+    };
+    document.addEventListener('click', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
 
   useEffect(() => {
     const capturedPokemon = JSON.parse(localStorage.getItem('captured'));
@@ -39,10 +60,22 @@ const DetailsCard = () => {
     setCurrentPokemon((currentPokemon) => localPokemon);
   }, [globalCurrentPokemon]);
 
-  console.log(currentPokemon.id);
+  const convertDate = (string) => {
+    const date = new Date(string);
+    const options = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    return date.toLocaleString(undefined, options);
+  };
 
   return (
-    <div className="sticky top-10 rounded-[44px] shadow-[0_0_16px_0_rgba(0,0,0,0.3)] md:mt-[9rem] w-[90%] self-center md:w-full h-fit md:mr-4 text-[#333333]">
+    <div
+      className="sticky top-10 rounded-[44px] shadow-[0_0_16px_0_rgba(0,0,0,0.3)] md:-mt-16 w-[90%] self-center md:w-full h-fit md:mr-4 text-[#333333] transition-all duration-300"
+      ref={detailsRef}
+      // onClick={() => setDetailsVisible(false)}
+    >
       <div
         className={`rounded-t-[44px] flex flex-col items-center justify-center py-12 ${setBg(
           currentPokemon?.types[0].type.name
@@ -103,11 +136,13 @@ const DetailsCard = () => {
           >
             <h3 className="font-bold text-lg mb-1">Capture Information</h3>
             <ul className="space-y-[10px]">
+              {capturedDetails?.nickname && (
+                <li className="text-[15px] capitalize">
+                  Nickname: {capturedDetails?.nickname}
+                </li>
+              )}
               <li className="text-[15px] capitalize">
-                Nickname: {capturedDetails?.nickname}
-              </li>
-              <li className="text-[15px] capitalize">
-                Captured on: {capturedDetails?.date}
+                Captured on: {convertDate(capturedDetails?.date)}
               </li>
               <li className="text-[15px] capitalize">
                 Captured Level: {capturedDetails?.level}
