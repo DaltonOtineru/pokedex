@@ -29,6 +29,7 @@ const DetailsCard = () => {
         !detailsRef.current.contains(e.target)
       ) {
         setDetailsVisible(false);
+        setGlobalCurrentPokemon(null);
       }
     };
     document.addEventListener('click', handleOutsideClick);
