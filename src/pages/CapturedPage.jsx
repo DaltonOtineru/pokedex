@@ -46,7 +46,7 @@ const CapturedPage = () => {
         </main>
       )}
       {captured && (
-        <main className="flex flex-col px-6">
+        <main className="flex flex-col px-6 pb-12">
           <div className="hidden place-content-center px-6 captured__titles rounded-2xl md:grid grid-cols-5 h-[60px]">
             <div className="col-span-2 font-semibold text-lg lg:text-xl">
               <h3>POKEMON</h3>

@@ -19,7 +19,7 @@ const Home = () => {
       <main
         className={`flex pt-4 pb-8 md:py-16 max-w-[1332px] mx-auto ${
           detailsVisible &&
-          'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+          'flex flex-col-reverse sm:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4'
         }`}
       >
         <PokemonList />

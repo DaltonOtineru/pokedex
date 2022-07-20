@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { currentPokemonState } from '../atoms/currentPokemonAtom';
 import { detailsState } from '../atoms/detailsAtom';
 import { setBg } from '../utils/setBg';
+import { setIdPrefix } from '../utils/setIdPrefix';
 
 const PokemonCard = ({ name, url }) => {
   const [detailsVisible, setDetailsVisible] = useRecoilState(detailsState);
@@ -57,7 +57,7 @@ const PokemonCard = ({ name, url }) => {
               />
             </div>
             <h2 className="text-sm sm:text-xl lg:text-[28px] font-bold text-[#333333] capitalize self-start pl-4 pt-2 md:py-2">
-              {pokemonDetails?.id > 9 ? '#0' : '#00'}
+              {setIdPrefix(pokemonDetails?.id)}
               {pokemonDetails?.id} {name}
             </h2>
             <ul className="w-full flex justify-start pl-4 poke__types pb-4">

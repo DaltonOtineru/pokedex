@@ -1,16 +1,17 @@
 import { setBg } from '../utils/setBg';
 import MobileCapturedDetails from './MobileCapturedDetails';
+import { setDate } from '../utils/setDate';
 
 const CapturedPokemon = ({ pokemon }) => {
-  const convertDate = (string) => {
-    const date = new Date(string);
-    const options = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    };
-    return date.toLocaleString(undefined, options);
-  };
+  // const convertDate = (string) => {
+  //   const date = new Date(string);
+  //   const options = {
+  //     year: 'numeric',
+  //     month: 'long',
+  //     day: 'numeric',
+  //   };
+  //   return date.toLocaleString(undefined, options);
+  // };
 
   return (
     <div className="sm:w-3/4 md:w-full mx-auto bg-white md:bg-transparent rounded-2xl grid grid-cols-4 md:grid-cols-5 captured__mobile capture__large h-[100px]">
@@ -57,7 +58,7 @@ const CapturedPokemon = ({ pokemon }) => {
       </div>
       <div className="col-span-1 hidden md:flex text-left items-center ">
         <h3 className=" font-medium text-lg capitalize xl:text-2xl">
-          {convertDate(pokemon?.date)}
+          {setDate(pokemon?.date)}
         </h3>
       </div>
       <div className="col-span-1 hidden md:flex justify-start items-center">

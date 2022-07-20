@@ -1,4 +1,5 @@
 import { setBg } from '../utils/setBg';
+import { setDate } from '../utils/setDate';
 
 const MobileCapturedDetails = ({ pokemon }) => {
   return (
@@ -14,9 +15,11 @@ const MobileCapturedDetails = ({ pokemon }) => {
           className="object-contain w-full h-auto md:h-[100px] md:w-[100px]"
         />
       </div>
-      <div className="pl-8 sm:pl-0 pt-3 flex flex-col md:hidden col-span-3 space-y-1">
-        <h3 className="capitalize font-bold">{pokemon?.nickname}</h3>
-        <p className="text-sm">Captured on: {pokemon?.date}</p>
+      <div className="pl-8 sm:pl-0 pt-3 flex flex-col md:hidden col-span-3 space-y-1 ">
+        <h3 className="capitalize font-bold">
+          {pokemon?.nickname ? pokemon?.nickname : pokemon?.name}
+        </h3>
+        <p className="text-sm">Captured on: {setDate(pokemon?.date)}</p>
         <p className="text-sm">Captured Level: {pokemon?.level}</p>
       </div>
     </>
