@@ -1,8 +1,5 @@
-import { useEffect } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil';
-import { offsetState } from './atoms/offsetAtom';
-import { pokemonsState } from './atoms/pokemonsAtom';
+import { RecoilRoot } from 'recoil';
 import CapturedPage from './pages/CapturedPage';
 import Home from './pages/Home';
 

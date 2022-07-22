@@ -10,7 +10,6 @@
     content: '\2022';
     padding: 0 2px;
   }
-  li:last-child::after,
   li:last-child::after {
     content: '';
   }

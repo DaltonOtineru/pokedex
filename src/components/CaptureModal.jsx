@@ -7,6 +7,7 @@ import { modalState } from '../atoms/modalAtom';
 const CaptureModal = () => {
   const [modalIsOpen, setModalIsOpen] = useRecoilState(modalState);
   const currentPokemon = useRecoilValue(currentPokemonState);
+  const [formError, setFormError] = useState(false);
 
   // State variable to hold the captured pokemon. Get the array from localStorage. If there is no captured pokemon, set the state as an empty array
   const [capturedPokemon, setCapturedPokemon] = useState(() => {
@@ -23,6 +24,7 @@ const CaptureModal = () => {
   const handleCapture = (e) => {
     e.preventDefault();
     if (!date.trim() && !level.trim()) {
+      setFormError(true);
       return;
     }
     const inputData = {
@@ -71,7 +73,11 @@ const CaptureModal = () => {
           leaveTo="opacity-0"
         >
           <div className="fixed inset-0 flex items-center justify-center p-4">
-            <Dialog.Panel className="mx-auto rounded-2xl bg-white transition duration-300 ease-out w-[348px] h-[334px] py-8 px-6 -mt-16">
+            <Dialog.Panel
+              className={`mx-auto rounded-2xl bg-white transition duration-300 ease-out w-[348px] h-[334px] py-8 px-6 -mt-16 ${
+                formError && 'h-[345px]'
+              }`}
+            >
               <form>
                 <h3 className="font-bold text-[28px] whitespace-nowrap mb-4 capitalize">
                   Capturing {currentPokemon?.name}
@@ -81,6 +87,7 @@ const CaptureModal = () => {
                   className="capture__input"
                   placeholder="Nickname (optional)"
                   value={nickname}
+                  onFocus={() => setFormError(false)}
                   onChange={(e) => setNickname(e.target.value)}
                 />
                 <input
@@ -88,15 +95,23 @@ const CaptureModal = () => {
                   className="capture__input"
                   placeholder="Captured Date"
                   value={date}
+                  onFocus={() => setFormError(false)}
                   onChange={(e) => setDate(e.target.value)}
                 />
                 <input
                   type="text"
-                  className="capture__input"
+                  className={`capture__input ${formError && 'mb-0'}`}
                   placeholder="Captured Level"
                   value={level}
+                  onFocus={() => setFormError(false)}
                   onChange={(e) => setLevel(e.target.value)}
                 />
+                {formError && (
+                  <span className="text-xs text-[#EB5435] font-medium mt-1">
+                    Captured date and level are required*
+                  </span>
+                )}
+
                 <button
                   className="bg-[#EB5435] text-2xl text-white rounded-full w-full py-[.65rem] hover:scale-[1.01] transition ease-out duration-200  font-semibold mt-2"
                   onClick={(e) => {

@@ -17,7 +17,7 @@ const CapturedPage = () => {
   }, []);
 
   return (
-    <div className="max-w-[1440px] mx-auto">
+    <div className="max-w-[1440px] mx-auto min-h-screen">
       <header
         className={`px-6 w-full flex justify-center md:justify-start items-center mx-auto pt-16 pb-12 ${
           captured === null && 'md:justify-center'
@@ -66,7 +66,7 @@ const CapturedPage = () => {
             </div>
           </div>
           <CapturedList />
-          <div className="sm:w-3/4 md:w-full mx-auto py-2">
+          <div className="sm:w-3/4 md:w-full mx-auto py-2 mt-auto">
             <Link to="/">
               <PageButton back text="Back" Icon={ArrowLeftIcon} />
             </Link>

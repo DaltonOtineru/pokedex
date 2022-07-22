@@ -4,7 +4,7 @@ import CapturedPage from '../../pages/CapturedPage';
 import { MemoryRouter } from 'react-router-dom';
 
 describe('Captured Page', () => {
-  test('it renders', () => {
+  test('it renders the page', () => {
     render(
       <MemoryRouter>
         <CapturedPage />

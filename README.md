@@ -18,15 +18,18 @@ React.js application utlizing the Pokemon API that displays a paginated list of 
 ![Pokedex Application](src/assets/readme/readme1.png)
 ![Pokedex Application](src/assets/readme/readme2.png)
 ![Pokedex Application](src/assets/readme/readme3.png)
+![Pokedex Application](src/assets/readme/readme6.png)
 ![Pokedex Application](src/assets/readme/readme4.png)
 ![Pokedex Application](src/assets/readme/readme5.png)
+![Pokedex Application](src/assets/readme/mobile1.png)
+![Pokedex Application](src/assets/readme/mobile2.png)
 
 ## Quick Start
 
 Download the zip file of the project or clone the repo on your machine.
 
 ```
-$ git clone https://github.com/DaltonOtineru/pokedex.git
+$ git clone https://github.com/daltonotineru/pokedex.git
 ```
 
 ---

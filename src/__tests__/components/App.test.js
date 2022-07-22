@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 import App from '../../App';
 
 describe('App Component', () => {
-  test('it renders', async () => {
+  test('it renders with pokemon list', async () => {
     render(<App />);
 
     const pokemonList = await waitFor(() => screen.getByTestId('pokemon-list'));

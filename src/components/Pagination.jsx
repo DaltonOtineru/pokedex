@@ -1,9 +1,4 @@
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ArrowLeftIcon,
-  ArrowRightIcon,
-} from '@heroicons/react/outline';
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/outline';
 import { useRecoilState } from 'recoil';
 import { offsetState } from '../atoms/offsetAtom';
 import PageButton from './PageButton';

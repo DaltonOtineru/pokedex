@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { detailsState } from '../atoms/detailsAtom';
 import { modalState } from '../atoms/modalAtom';
@@ -42,7 +42,10 @@ const Home = () => {
         <PokemonList />
         {/* Conditionally render the pokemon details card based on if the user selects a pokemon */}
         {detailsVisible && (
-          <div className="flex flex-col col-span-1 w-full">
+          <div
+            className="flex flex-col col-span-1 w-full"
+            data-testid="details-card"
+          >
             <DetailsCard />
           </div>
         )}

@@ -1,4 +1,4 @@
-// Reusable utility function which takes in the pokemon type as an argument and returns the correct color to set the background as
+// Reusable utility function which takes in the pokemon type as an argument and returns the correct color to apply as the background
 
 export const setBg = (type) => {
   switch (type) {
