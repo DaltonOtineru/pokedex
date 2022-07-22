@@ -1,7 +1,9 @@
-import React from 'react';
-import { useRecoilValue } from 'recoil';
+import React, { useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { detailsState } from '../atoms/detailsAtom';
 import { modalState } from '../atoms/modalAtom';
+import { offsetState } from '../atoms/offsetAtom';
+import { pokemonsState } from '../atoms/pokemonsAtom';
 import CaptureModal from '../components/CaptureModal';
 import DetailsCard from '../components/DetailsCard';
 import Header from '../components/Header';
@@ -13,6 +15,21 @@ const Home = () => {
   const detailsVisible = useRecoilValue(detailsState);
   const modalIsOpen = useRecoilValue(modalState);
 
+  const [pokemons, setPokemons] = useRecoilState(pokemonsState);
+  const offset = useRecoilValue(offsetState);
+  const URL = `https://pokeapi.co/api/v2/pokemon/?limit=20&offset=${offset}`;
+
+  useEffect(() => {
+    // Fetch  initial data from pokemon api and set to global pokemon variable
+    // function will re run anytime the offset is updated to display the correct page
+    const fetchPokemon = async () => {
+      const data = await fetch(URL);
+      const { results } = await data.json();
+      setPokemons(results);
+    };
+    fetchPokemon();
+  }, [offset]);
+
   return (
     <>
       <Header />
@@ -23,6 +40,7 @@ const Home = () => {
         }`}
       >
         <PokemonList />
+        {/* Conditionally render the pokemon details card based on if the user selects a pokemon */}
         {detailsVisible && (
           <div className="flex flex-col col-span-1 w-full">
             <DetailsCard />
@@ -31,6 +49,7 @@ const Home = () => {
       </main>
       <Pagination />
       <MobileCapturedButton />
+      {/* Conditionally render the modal to capture a pokemon only after the user clicks the capture button */}
       {modalIsOpen && <CaptureModal />}
     </>
   );

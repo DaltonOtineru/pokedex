@@ -1,3 +1,5 @@
+// Reusable utility function which takes in the pokemon type as an argument and returns the correct color to set the background as
+
 export const setBg = (type) => {
   switch (type) {
     case 'rock':

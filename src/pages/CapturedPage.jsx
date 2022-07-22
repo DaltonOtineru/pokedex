@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import pokedex from '../assets/pokedex_logo.svg';
 import { Link } from 'react-router-dom';
 import CapturedList from '../components/CapturedList';
+import { ArrowLeftIcon } from '@heroicons/react/outline';
+import PageButton from '../components/PageButton';
 
 const CapturedPage = () => {
   const [captured, setCaptured] = useState(null);
-  console.log(captured);
 
+  // Check if there's any captured pokemon currently saved in local storage and set to captured state if so
   useEffect(() => {
     const capturedPokemons = JSON.parse(localStorage.getItem('captured'));
     if (capturedPokemons) {
@@ -26,6 +28,7 @@ const CapturedPage = () => {
         </Link>
       </header>
 
+      {/* If there are no captured pokemon display these elements */}
       {captured === null && (
         <main className="flex justify-center">
           <div className="captured__none rounded-xl mt-28 p-10 py-20 space-y-8 text-[#333333] max-w-[90%]">
@@ -45,6 +48,7 @@ const CapturedPage = () => {
           </div>
         </main>
       )}
+      {/* If there is captured pokemon display the header and captured pokemons list */}
       {captured && (
         <main className="flex flex-col px-6 pb-12">
           <div className="hidden place-content-center px-6 captured__titles rounded-2xl md:grid grid-cols-5 h-[60px]">
@@ -62,6 +66,11 @@ const CapturedPage = () => {
             </div>
           </div>
           <CapturedList />
+          <div className="sm:w-3/4 md:w-full mx-auto py-2">
+            <Link to="/">
+              <PageButton back text="Back" Icon={ArrowLeftIcon} />
+            </Link>
+          </div>
         </main>
       )}
     </div>

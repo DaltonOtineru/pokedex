@@ -1,32 +1,21 @@
 import { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil';
 import { offsetState } from './atoms/offsetAtom';
 import { pokemonsState } from './atoms/pokemonsAtom';
 import CapturedPage from './pages/CapturedPage';
 import Home from './pages/Home';
 
 const App = () => {
-  const [pokemons, setPokemons] = useRecoilState(pokemonsState);
-  const offset = useRecoilValue(offsetState);
-  const URL = `https://pokeapi.co/api/v2/pokemon/?limit=20&offset=${offset}`;
-
-  useEffect(() => {
-    const fetchPokemon = async () => {
-      const data = await fetch(URL);
-      const { results } = await data.json();
-      setPokemons(results);
-    };
-    fetchPokemon();
-  }, [offset]);
-
   return (
-    <div id="root">
-      <Routes>
-        <Route path="/" exact element={<Home />} />
-        <Route path="/capturedpokemons" exact element={<CapturedPage />} />
-      </Routes>
-    </div>
+    <Router>
+      <RecoilRoot>
+        <Routes>
+          <Route path="/" exact element={<Home />} />
+          <Route path="/captured" exact element={<CapturedPage />} />
+        </Routes>
+      </RecoilRoot>
+    </Router>
   );
 };
 

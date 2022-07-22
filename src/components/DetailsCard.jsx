@@ -4,13 +4,14 @@ import { currentPokemonState } from '../atoms/currentPokemonAtom';
 import { detailsState } from '../atoms/detailsAtom';
 import { modalState } from '../atoms/modalAtom';
 import { setBg } from '../utils/setBg';
-import { setIdPrefix } from '../utils/setIdPrefix';
+import { setIdNumber } from '../utils/setIdNumber';
 import { setDate } from '../utils/setDate';
 
 const DetailsCard = () => {
   const [detailsVisible, setDetailsVisible] = useRecoilState(detailsState);
   const [globalCurrentPokemon, setGlobalCurrentPokemon] =
     useRecoilState(currentPokemonState);
+  // Set the current pokemon to the currentPokemon in local storage, or to the global current pokemon if there is none
   const [currentPokemon, setCurrentPokemon] = useState(() => {
     const localPokemon = JSON.parse(localStorage.getItem('currentPokemon'));
     return localPokemon || globalCurrentPokemon;
@@ -22,6 +23,7 @@ const DetailsCard = () => {
   const detailsRef = useRef();
 
   useEffect(() => {
+    // Event listener to close the pokemon details card if the user clicks outside
     const handleOutsideClick = (e) => {
       if (
         detailsRef.current &&
@@ -29,7 +31,7 @@ const DetailsCard = () => {
         !detailsRef.current.contains(e.target)
       ) {
         setDetailsVisible(false);
-        setGlobalCurrentPokemon(null);
+        // setGlobalCurrentPokemon(null);
       }
     };
     document.addEventListener('click', handleOutsideClick);
@@ -40,18 +42,19 @@ const DetailsCard = () => {
   }, []);
 
   useEffect(() => {
-    const capturedPokemon = JSON.parse(localStorage.getItem('captured'));
-    if (capturedPokemon) {
-      const currentPokemonIndex = capturedPokemon.findIndex(
+    // Get the captured pokemons array from localStorage. If there is any, find the index of the current pokemon in that array to see if it's been captured.If the pokemon is captured update the isCaptured state variable to true, and set the captured details object variable to the nickname, level and date it was assigned.
+    const capturedPokemons = JSON.parse(localStorage.getItem('captured'));
+    if (capturedPokemons) {
+      const currentPokemonIndex = capturedPokemons.findIndex(
         (pokemon) => pokemon.name === currentPokemon?.name
       );
       setIsCaptured((isCaptured) => (currentPokemonIndex > -1 ? true : false));
       if (currentPokemonIndex >= 0) {
         setCapturedDetails((capturedDetails) =>
           setCapturedDetails({
-            nickname: capturedPokemon[currentPokemonIndex].nickname,
-            date: capturedPokemon[currentPokemonIndex].date,
-            level: capturedPokemon[currentPokemonIndex].level,
+            nickname: capturedPokemons[currentPokemonIndex].nickname,
+            date: capturedPokemons[currentPokemonIndex].date,
+            level: capturedPokemons[currentPokemonIndex].level,
           })
         );
       }
@@ -59,6 +62,7 @@ const DetailsCard = () => {
   }, [currentPokemon, modalIsOpen]);
 
   useEffect(() => {
+    // anytime the global state variable for the currently selected pokemon is changed, it's getting that current pokemon data from local storage and setting it as the useState value.
     const localPokemon = JSON.parse(localStorage.getItem('currentPokemon'));
     setCurrentPokemon((currentPokemon) => localPokemon);
   }, [globalCurrentPokemon]);
@@ -79,8 +83,7 @@ const DetailsCard = () => {
           className="h-[140px] w-[140px]"
         />
         <h3 className="text-[26px] capitalize text-white font-bold">
-          {setIdPrefix(currentPokemon?.id)}
-          {currentPokemon?.id} {currentPokemon.name}
+          {setIdNumber(currentPokemon?.id)} {currentPokemon.name}
         </h3>
       </div>
       <div className="px-4 pt-8 pb-12 space-y-6">
@@ -96,10 +99,10 @@ const DetailsCard = () => {
               ))}
             </ul>
             <li className="text-[15px]">
-              Weight: {currentPokemon.weight / 100} kg
+              Weight: {currentPokemon?.weight / 100} kg
             </li>
             <li className="text-[15px]">
-              Height: {currentPokemon.height / 100} m
+              Height: {currentPokemon?.height / 100} m
             </li>
           </ul>
         </div>
@@ -109,7 +112,7 @@ const DetailsCard = () => {
         >
           <h3 className="font-bold text-lg mb-1">Base Stats</h3>
           <ul className="space-y-[10px]">
-            {currentPokemon.stats.map(({ base_stat, stat: { name } }) => (
+            {currentPokemon?.stats.map(({ base_stat, stat: { name } }) => (
               <li
                 key={name}
                 className={`text-[15px] ${
@@ -121,6 +124,7 @@ const DetailsCard = () => {
             ))}
           </ul>
         </div>
+        {/* Conditionally display the user assigned capture information if the pokemon's captured */}
         {isCaptured && (
           <div
             className="w-full detail__group
@@ -142,12 +146,15 @@ const DetailsCard = () => {
             </ul>
           </div>
         )}
-        <button
-          className="bg-[#EB5435] font-semibold text-lg text-white rounded-full w-full py-4 hover:scale-[1.01] transition ease-out duration-200"
-          onClick={() => setModalIsOpen(true)}
-        >
-          Capture
-        </button>
+        {/* Conditionally display the capture button only if the pokemon isn't captured */}
+        {!isCaptured && (
+          <button
+            className="bg-[#EB5435] font-semibold text-lg text-white rounded-full w-full py-4 hover:scale-[1.01] transition ease-out duration-200"
+            onClick={() => setModalIsOpen(true)}
+          >
+            Capture
+          </button>
+        )}
       </div>
     </div>
   );

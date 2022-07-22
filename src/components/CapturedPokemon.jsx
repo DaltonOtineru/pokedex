@@ -1,18 +1,9 @@
 import { setBg } from '../utils/setBg';
 import MobileCapturedDetails from './MobileCapturedDetails';
 import { setDate } from '../utils/setDate';
+import { setIdNumber } from '../utils/setIdNumber';
 
 const CapturedPokemon = ({ pokemon }) => {
-  // const convertDate = (string) => {
-  //   const date = new Date(string);
-  //   const options = {
-  //     year: 'numeric',
-  //     month: 'long',
-  //     day: 'numeric',
-  //   };
-  //   return date.toLocaleString(undefined, options);
-  // };
-
   return (
     <div className="sm:w-3/4 md:w-full mx-auto bg-white md:bg-transparent rounded-2xl grid grid-cols-4 md:grid-cols-5 captured__mobile capture__large h-[100px]">
       <MobileCapturedDetails pokemon={pokemon} />
@@ -29,9 +20,7 @@ const CapturedPokemon = ({ pokemon }) => {
         </div>
         <div className="flex flex-col">
           <h3 className="flex font-bold text-xl lg:text-2xl capitalize">
-            {' '}
-            {pokemon?.id > 9 ? '#0' : '#00'}
-            {pokemon?.id} {pokemon?.name}
+            {setIdNumber(pokemon?.id)} {pokemon?.name}
           </h3>
           <ul className="poke__types inline-flex items-center">
             {pokemon?.types?.map(({ type: { name } }) => (

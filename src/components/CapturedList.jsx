@@ -7,6 +7,7 @@ const CapturedList = () => {
 
   useEffect(() => setMounted((prevState) => true));
 
+  // Get the captured pokemon saved to localStorage, map through them and return a captured pokemon for each one
   return (
     <>
       {mounted && (

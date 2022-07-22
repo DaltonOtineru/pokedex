@@ -8,17 +8,23 @@ const CaptureModal = () => {
   const [modalIsOpen, setModalIsOpen] = useRecoilState(modalState);
   const currentPokemon = useRecoilValue(currentPokemonState);
 
+  // State variable to hold the captured pokemon. Get the array from localStorage. If there is no captured pokemon, set the state as an empty array
   const [capturedPokemon, setCapturedPokemon] = useState(() => {
     const captured = JSON.parse(localStorage.getItem('captured'));
     return captured || [];
   });
 
+  // State values to contain the user input data
   const [nickname, setNickname] = useState('');
   const [date, setDate] = useState('');
   const [level, setLevel] = useState('');
 
+  // Triggered when user clicks capture button. If there is no input data in the capture date or level the funtion won't run. If there is, it creates a new object with the user input data, then creates another new object and combines the input data object with the current pokemon object, into this new object. Finally, push this new object to the captured pokemon array and update the localStorage with the new pokemon.
   const handleCapture = (e) => {
     e.preventDefault();
+    if (!date.trim() && !level.trim()) {
+      return;
+    }
     const inputData = {
       nickname: nickname,
       date: date,
@@ -35,16 +41,7 @@ const CaptureModal = () => {
   };
 
   return (
-    <Transition
-      show={modalIsOpen}
-      enter="transition duration-100 ease-out"
-      enterFrom="transform scale-95 opacity-0"
-      enterTo="transform scale-100 opacity-100"
-      leave="transition duration-75 ease-out"
-      leaveFrom="transform scale-100 opacity-100"
-      leaveTo="transform scale-95 opacity-0"
-      as={Fragment}
-    >
+    <Transition show={modalIsOpen} as={Fragment}>
       <Dialog
         open={modalIsOpen}
         onClose={() => setModalIsOpen(false)}
@@ -80,18 +77,21 @@ const CaptureModal = () => {
                   Capturing {currentPokemon?.name}
                 </h3>
                 <input
+                  type="text"
                   className="capture__input"
                   placeholder="Nickname (optional)"
                   value={nickname}
                   onChange={(e) => setNickname(e.target.value)}
                 />
                 <input
+                  type="text"
                   className="capture__input"
                   placeholder="Captured Date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
                 />
                 <input
+                  type="text"
                   className="capture__input"
                   placeholder="Captured Level"
                   value={level}
