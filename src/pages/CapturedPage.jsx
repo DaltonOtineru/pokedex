@@ -68,7 +68,7 @@ const CapturedPage = () => {
           <CapturedList />
           <div className="sm:w-3/4 md:w-full mx-auto py-2 mt-auto">
             <Link to="/">
-              <PageButton back text="Back" Icon={ArrowLeftIcon} />
+              <PageButton back text="Back" Icon={ArrowLeftIcon} captureBtn />
             </Link>
           </div>
         </main>

@@ -24,12 +24,15 @@ const PokemonCard = ({ name, url }) => {
     fetchDetails();
   }, [url]);
 
-  // Set the currently selected pokemon which will be displayed on the details card, and then update the local storage with the same data. Set the details card visibility to true so the card will show
+  // Set the currently selected pokemon which will be displayed on the details card, and then update the local storage with the same data. Set the details card visibility to true so the card will show. scroll to newly selected details card on smaller screens
   const handlePokemonClick = (e) => {
     e.stopPropagation();
     setCurrentPokemon((currentPokemon) => pokemonDetails);
     localStorage.setItem('currentPokemon', JSON.stringify(pokemonDetails));
     setDetailsVisible(true);
+    if (window.screen.width < 768) {
+      window.scroll({ top: 145, behavior: 'smooth' });
+    }
   };
 
   return (
