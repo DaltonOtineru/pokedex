@@ -1,5 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { currentPokemonState } from '../atoms/currentPokemonAtom';
 import { modalState } from '../atoms/modalAtom';
@@ -36,6 +37,10 @@ const CaptureModal = () => {
     capturedPokemon.push(updatedCapture);
     localStorage.setItem('captured', JSON.stringify(capturedPokemon));
 
+    const fireToast = () => {
+      toast(`You captured ${nickname ? nickname : currentPokemon?.name}`);
+    };
+    fireToast();
     setNickname('');
     setDate('');
     setLevel('');

@@ -17,7 +17,7 @@ const CapturedPage = () => {
   }, []);
 
   return (
-    <div className="max-w-[1440px] mx-auto min-h-screen">
+    <div className="max-w-[1440px] mx-auto min-h-screen flex flex-col">
       <header
         className={`px-6 w-full flex justify-center md:justify-start items-center mx-auto pt-16 pb-12 ${
           captured === null && 'md:justify-center'
@@ -50,7 +50,7 @@ const CapturedPage = () => {
       )}
       {/* If there is captured pokemon display the header and captured pokemons list */}
       {captured && (
-        <main className="flex flex-col px-6 pb-12">
+        <main className="flex flex-col px-6 pb-6 flex-grow">
           <div className="hidden place-content-center px-6 captured__titles rounded-2xl md:grid grid-cols-5 h-[60px]">
             <div className="col-span-2 font-semibold text-lg lg:text-xl">
               <h3>POKEMON</h3>
@@ -66,7 +66,7 @@ const CapturedPage = () => {
             </div>
           </div>
           <CapturedList />
-          <div className="sm:w-3/4 md:w-full mx-auto py-2 mt-auto">
+          <div className="sm:w-3/4 md:w-full mx-auto py-2 mt-auto flex-shrink-0">
             <Link to="/">
               <PageButton back text="Back" Icon={ArrowLeftIcon} captureBtn />
             </Link>
